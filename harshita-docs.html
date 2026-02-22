@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work Documentation — Harshita | ams-OSRAM Semiconductor</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 10px; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+button { cursor: pointer; font-family: inherit; }
+
+/* ===== TOKENS — same as portfolio ===== */
+:root {
+  --bg:           #f7f6f2;
+  --bg-card:      #ffffff;
+  --bg-sidebar:   #1e2028;
+  --bg-hover:     #f0ede8;
+
+  --border:       #e4e0d8;
+  --border-strong:#c8c4bc;
+
+  --text-dark:    #1a1a24;
+  --text-body:    #44424e;
+  --text-muted:   #8a8898;
+  --text-sidebar-muted: #6a6880;
+
+  --accent:       #2a5caa;
+  --accent-soft:  #eef2fb;
+  --accent-hover: #1e4690;
+
+  --gold:         #b07d3a;
+  --gold-soft:    #fdf6ec;
+
+  --tag-bg:       #eff1f8;
+  --tag-text:     #3a4a7a;
+
+  --font:   'Inter', -apple-system, sans-serif;
+  --serif:  'Lora', Georgia, serif;
+  --mono:   'JetBrains Mono', 'Fira Code', monospace;
+  --ease:   cubic-bezier(0.4,0,0.2,1);
+  --t:      0.22s;
+  --sidebar-w: 290px;
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg: 0 4px 24px rgba(0,0,0,0.12);
+}
+
+/* ===== SCROLL PROGRESS ===== */
+#prog {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 3px; background: var(--accent);
+  transform-origin: left; transform: scaleX(0);
+  z-index: 500; transition: transform 0.08s linear;
+}
+
+/* ===== LAYOUT ===== */
+.wrap { display: flex; min-height: 100vh; }
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  background: var(--bg-sidebar);
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  padding: 56px 36px 48px;
+  overflow-y: auto;
+}
+
+.s-back {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 1.15rem;
+  color: #7ca3e0; margin-bottom: 32px;
+  transition: color var(--t);
+}
+.s-back:hover { color: #fff; }
+.s-back svg { width: 14px; height: 14px; fill: currentColor; }
+
+.s-name {
+  font-family: var(--serif);
+  font-size: 2.4rem; font-weight: 700;
+  color: #ffffff; line-height: 1.15;
+  letter-spacing: -0.3px; margin-bottom: 5px;
+}
+
+.s-page-title {
+  font-family: var(--mono);
+  font-size: 1.15rem; color: #7ca3e0;
+  letter-spacing: 0.02em; margin-bottom: 36px;
+  line-height: 1.5;
+}
+
+/* NAV */
+nav { display: flex; flex-direction: column; gap: 2px; }
+
+.nav-btn {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 0; background: none; border: none;
+  color: var(--text-sidebar-muted);
+  font-size: 1.2rem; font-weight: 500;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  font-family: var(--mono); transition: color var(--t);
+  text-align: left; width: 100%;
+}
+
+.nav-btn .bar {
+  width: 22px; height: 1px;
+  background: currentColor; flex-shrink: 0;
+  transition: width var(--t), background var(--t);
+}
+
+.nav-btn:hover { color: #e8e6f0; }
+.nav-btn:hover .bar { width: 34px; }
+.nav-btn.active { color: #ffffff; }
+.nav-btn.active .bar { width: 38px; background: #7ca3e0; }
+
+/* sidebar social */
+.s-social {
+  display: flex; gap: 16px; align-items: center;
+  padding-top: 28px; border-top: 1px solid #2e3040;
+}
+.s-social a {
+  color: var(--text-sidebar-muted);
+  display: flex; align-items: center;
+  transition: color var(--t), transform var(--t);
+}
+.s-social a:hover { color: #7ca3e0; transform: translateY(-3px); }
+.s-social svg { width: 17px; height: 17px; fill: currentColor; }
+
+/* ===== MAIN ===== */
+.main {
+  flex: 1; background: var(--bg);
+  padding: 64px 72px 160px;
+  max-width: 860px;
+}
+
+/* ===== PAGE HEADER ===== */
+.page-header {
+  margin-bottom: 56px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ph-label {
+  font-family: var(--mono); font-size: 1.1rem;
+  color: var(--accent); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+
+.ph-title {
+  font-family: var(--serif);
+  font-size: 3rem; font-weight: 700;
+  color: var(--text-dark); line-height: 1.15;
+  letter-spacing: -0.3px; margin-bottom: 10px;
+}
+
+.ph-sub {
+  font-size: 1.5rem; color: var(--text-muted);
+  line-height: 1.7; max-width: 580px;
+}
+
+.ph-meta {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-top: 20px;
+}
+
+.ph-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 1.15rem;
+  color: var(--accent); background: var(--accent-soft);
+  border: 1px solid #b8caf0; padding: 5px 14px;
+  border-radius: 100px;
+}
+
+/* ===== SECTION ===== */
+.section {
+  margin-bottom: 80px;
+  scroll-margin-top: 64px;
+}
+
+.sec-head {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 28px;
+}
+
+.sec-label {
+  font-family: var(--mono); font-size: 1.1rem;
+  color: var(--accent); flex-shrink: 0; letter-spacing: 0.08em;
+}
+
+.sec-title {
+  font-family: var(--serif); font-size: 2rem;
+  font-weight: 600; color: var(--text-dark); letter-spacing: -0.2px;
+}
+
+.sec-rule { flex: 1; height: 1px; background: var(--border); }
+
+/* ===== DOC CARD ===== */
+.doc-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: box-shadow var(--t), border-color var(--t);
+}
+
+.doc-card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-lg); }
+
+.doc-card-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px; padding: 24px 28px 20px;
+  cursor: pointer; user-select: none;
+}
+
+.doc-card-header:hover .dc-title { color: var(--accent); }
+
+.dc-left { display: flex; align-items: flex-start; gap: 16px; }
+
+.dc-icon {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: var(--accent-soft);
+  border: 1px solid #b8caf0;
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem;
+}
+
+.dc-title {
+  font-family: var(--serif); font-size: 1.75rem;
+  font-weight: 600; color: var(--text-dark); line-height: 1.3;
+  margin-bottom: 4px; transition: color var(--t);
+}
+
+.dc-desc {
+  font-size: 1.35rem; color: var(--text-muted); line-height: 1.6;
+}
+
+.dc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+.dc-tag {
+  font-family: var(--mono); font-size: 1.05rem;
+  color: var(--tag-text); background: var(--tag-bg);
+  border: 1px solid #d4daf0; padding: 2px 9px; border-radius: 3px;
+}
+
+.dc-chevron {
+  width: 28px; height: 28px; flex-shrink: 0; margin-top: 4px;
+  background: var(--bg-hover); border: 1px solid var(--border);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); font-size: 1.2rem;
+  transition: all var(--t); transform: rotate(0deg);
+}
+
+.doc-card.open .dc-chevron {
+  transform: rotate(180deg);
+  background: var(--accent-soft);
+  border-color: #b8caf0;
+  color: var(--accent);
+}
+
+.dc-body {
+  display: none;
+  padding: 0 28px 28px;
+  border-top: 1px solid var(--border);
+}
+
+.doc-card.open .dc-body { display: block; }
+
+/* upload zone inside card */
+.upload-zone {
+  background: var(--bg);
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius);
+  padding: 28px 20px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 8px; margin-top: 20px;
+  text-align: center; cursor: pointer;
+  transition: all var(--t);
+  position: relative; overflow: hidden;
+  min-height: 140px;
+}
+
+.upload-zone:hover { border-color: var(--accent); background: var(--accent-soft); }
+.upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+
+.uz-icon { font-size: 2.8rem; }
+.uz-label { font-family: var(--mono); font-size: 1.2rem; color: var(--text-muted); }
+.uz-hint { font-size: 1.1rem; color: var(--text-muted); opacity: 0.7; }
+
+/* file link zone */
+.link-zone {
+  margin-top: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+
+.link-zone input[type=text] {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  font-family: var(--mono); font-size: 1.25rem;
+  color: var(--text-dark);
+  outline: none; transition: border-color var(--t);
+}
+
+.link-zone input[type=text]:focus { border-color: var(--accent); }
+.link-zone input[type=text]::placeholder { color: var(--text-muted); }
+
+.link-save-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 18px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: var(--radius);
+  font-size: 1.25rem; font-weight: 600; font-family: var(--mono);
+  transition: background var(--t), transform var(--t);
+}
+.link-save-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+.saved-link {
+  display: none;
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: var(--radius);
+  font-size: 1.3rem; color: #166534;
+  font-family: var(--mono);
+}
+
+.saved-link a { color: var(--accent); text-decoration: underline; }
+
+/* uploaded file preview */
+.uploaded-preview {
+  display: none;
+  margin-top: 16px;
+  position: relative;
+}
+.uploaded-preview img {
+  width: 100%; max-height: 360px;
+  object-fit: contain;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+.uploaded-preview .remove-btn {
+  position: absolute; top: 8px; right: 8px;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid var(--border-strong);
+  border-radius: 50%; width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; color: var(--text-muted);
+  transition: all var(--t);
+}
+.uploaded-preview .remove-btn:hover { color: #dc2626; border-color: #dc2626; }
+
+/* dc prose */
+.dc-prose {
+  font-size: 1.5rem; color: var(--text-body);
+  line-height: 1.85; margin-top: 20px; margin-bottom: 0;
+}
+
+/* ===== INFO BOX ===== */
+.info-box {
+  background: var(--accent-soft);
+  border: 1px solid #b8caf0;
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  font-size: 1.4rem;
+  color: var(--text-body);
+  line-height: 1.75;
+  margin-bottom: 32px;
+}
+
+.info-box strong { color: var(--accent); }
+
+/* ===== CONFIDENTIAL NOTE ===== */
+.conf-note {
+  background: var(--gold-soft);
+  border: 1px solid #e8d4b0;
+  border-left: 3px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  font-size: 1.3rem;
+  color: var(--text-body);
+  margin-top: 12px;
+  line-height: 1.7;
+}
+
+/* ===== REVEAL ===== */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s var(--ease), transform 0.5s var(--ease); }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--bg-sidebar);
+  text-align: center; padding: 24px 32px;
+  font-family: var(--mono); font-size: 1.2rem; color: #4a4a60;
+}
+footer em { color: #7ca3e0; font-style: normal; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 980px) {
+  .wrap { flex-direction: column; }
+  .sidebar { position: relative; width: 100%; height: auto; padding: 32px 24px; }
+  nav { display: none; }
+  .s-social { border-top: none; padding-top: 0; }
+  .main { padding: 32px 20px 80px; max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<div class="wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <!-- Back to portfolio -->
+      <a href="harshita-portfolio-v4.html" class="s-back">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Back to Portfolio
+      </a>
+
+      <div class="s-name">Harshita</div>
+      <div class="s-page-title">Work Documentation<br>ams-OSRAM Semiconductor</div>
+
+      <nav aria-label="Sections">
+        <button class="nav-btn active" data-s="overview"><span class="bar"></span>Overview</button>
+        <button class="nav-btn" data-s="rtl"><span class="bar"></span>RTL Design</button>
+        <button class="nav-btn" data-s="interfaces"><span class="bar"></span>Interfaces</button>
+        <button class="nav-btn" data-s="safety"><span class="bar"></span>Func. Safety</button>
+        <button class="nav-btn" data-s="verification"><span class="bar"></span>Verification</button>
+        <button class="nav-btn" data-s="signoff"><span class="bar"></span>Sign-off</button>
+      </nav>
+    </div>
+
+    <div class="s-social">
+      <a href="https://linkedin.com/in/harshita-harshi-9377891bb" target="_blank" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a href="mailto:harshitamjw@gmail.com" aria-label="Email">
+        <svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-.904.732-1.636 1.636-1.636H22.364c.904 0 1.636.732 1.636 1.636zM12 14.182l8.727-6.545H3.273L12 14.182z"/></svg>
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header reveal">
+      <div class="ph-label">Work Documentation</div>
+      <h1 class="ph-title">ams-OSRAM Semiconductor</h1>
+      <p class="ph-sub">A structured record of the engineering work, decisions, and contributions from my role as Contract Digital Design Engineer — June 2025 to June 2026.</p>
+      <div class="ph-meta">
+        <span class="ph-tag">📍 Hyderabad, India</span>
+        <span class="ph-tag">🗓 June 2025 – June 2026</span>
+        <span class="ph-tag">⚙️ Mixed-Signal SoC · Temperature Sensor Chip</span>
+      </div>
+    </div>
+
+    <!-- OVERVIEW -->
+    <section id="overview" class="section">
+      <div class="sec-head reveal">
+        <span class="sec-label">01.</span>
+        <h2 class="sec-title">Project Overview</h2>
+        <div class="sec-rule"></div>
+      </div>
+
+      <div class="info-box reveal">
+        <strong>Note for recruiters:</strong> This page documents the nature, scope, and technical depth of work done at ams-OSRAM. Specific documents can be shared on request — links or files can be attached to each section below.
+      </div>
+
+      <!-- Overview card -->
+      <div class="doc-card reveal">
+        <div class="doc-card-header" onclick="toggleCard(this)">
+          <div class="dc-left">
+            <div class="dc-icon">🏭</div>
+            <div>
+              <div class="dc-title">Chip Context — Temperature Sensor SoC</div>
+              <div class="dc-desc">Overview of the product, my role, and the engineering context.</div>
+              <div class="dc-tags">
+                <span class="dc-tag">Mixed-Signal SoC</span>
+                <span class="dc-tag">NTC Sensor</span>
+                <span class="dc-tag">ITS Sensor</span>
+                <span class="dc-tag">Production Chip</span>
+              </div>
+            </div>
+          </div>
+          <div class="dc-chevron">▾</div>
+        </div>
+        <div class="dc-body">
+          <p class="dc-prose">I worked on a production Temperature Sensor chip at ams-OSRAM integrating both NTC (Negative Temperature Coefficient) and ITS (Integrated Temperature Sensor) sensing elements. The chip is a mixed-signal SoC — combining analog front-end circuitry with a digital back-end responsible for data processing, interface communication, and functional safety logic.</p>
+          <p class="dc-prose" style="margin-top:12px;">My role covered the entire digital RTL domain: from block-level design and DFT insertion to CDC sign-off and formal verification. I worked directly with the physical design and analog teams to ensure timing, scan, and interface constraints were met.</p>
+
+          <div class="upload-zone" id="uz-overview">
+            <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'overview')">
+            <div class="uz-icon">📎</div>
+            <div class="uz-label">Add document or screenshot</div>
+            <div class="uz-hint">PDF, PNG, JPG, DOCX — click or drag</div>
+          </div>
+          <div class="link-zone">
+            <input type="text" id="link-overview" placeholder="Or paste a Google Drive / OneDrive link…">
+            <button class="link-save-btn" onclick="saveLink('overview')">Save Link</button>
+          </div>
+          <div class="saved-link" id="saved-overview"></div>
+          <div class="uploaded-preview" id="prev-overview">
+            <img id="img-overview" alt="Document preview">
+            <button class="remove-btn" onclick="removeUpload('overview')">×</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RTL DESIGN -->
+    <section id="rtl" class="section">
+      <div class="sec-head reveal">
+        <span class="sec-label">02.</span>
+        <h2 class="sec-title">RTL Design Work</h2>
+        <div class="sec-rule"></div>
+      </div>
+
+      <!-- DSP Logic -->
+      <div class="doc-card reveal">
+        <div class="doc-card-header" onclick="toggleCard(this)">
+          <div class="dc-left">
+            <div class="dc-icon">🔣</div>
+            <div>
+              <div class="dc-title">DSP Logic & Numerical Computation Blocks</div>
+              <div class="dc-desc">RTL design of digital signal processing and arithmetic computation modules.</div>
+              <div class="dc-tags">
+                <span class="dc-tag">SystemVerilog</span>
+                <span class="dc-tag">DSP</span>
+                <span class="dc-tag">Fixed-Point Arithmetic</span>
+              </div>
+            </div>
+          </div>
+          <div class="dc-chevron">▾</div>
+        </div>
+        <div class="dc-body">
+          <p class="dc-prose">Designed RTL blocks responsible for processing the raw digital output from the ADC — including filter logic, gain correction, offset calibration arithmetic, and temperature linearisation computation. These blocks operate on fixed-point data and must produce accurate results within defined latency budgets.</p>
+          <div class="conf-note">⚠️ Specific design files and microarchitecture details are subject to NDA. Please request access directly.</div>
+          <div class="upload-zone">
+            <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'dsp')">
+            <div class="uz-icon">📎</div>
+            <div class="uz-label">Add document or screenshot</div>
+            <div class="uz-hint">PDF, PNG, JPG, DOCX</div>
+          </div>
+          <div class="link-zone">
+            <input type="text" id="link-dsp" placeholder="Paste a Google Drive / OneDrive link…">
+            <button class="link-save-btn" onclick="saveLink('dsp')">Save Link</button>
+          </div>
+          <div class="saved-link" id="saved-dsp"></div>
+          <div class="uploaded-preview" id="prev-dsp">
+            <img id="img-dsp" alt="Document preview">
+            <button class="remove-btn" onclick="removeUpload('dsp')">×</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADC Data Path -->
+      <div class="doc-card reveal">
+        <div class="doc-card-header" onclick="toggleCard(this)">
+          <div class="dc-left">
+            <div class="dc-icon">📡</div>
+            <div>
+              <div class="dc-title">ADC Data Handling Pipeline</div>
+              <div class="dc-desc">Digital interface and data path logic between the analog ADC and the digital processing core.</div>
+              <div class="dc-tags">
+                <span class="dc-tag">SystemVerilog</span>
+                <span class="dc-tag">ADC Interface</span>
+                <span class="dc-tag">Data Path</span>
+              </div>
+            </div>
+          </div>
+          <div class="dc-chevron">▾</div>
+        </div>
+        <div class="dc-body">
+          <p class="dc-prose">Developed the digital pipeline that receives raw conversion data from the mixed-signal ADC, manages handshaking and data validity, applies synchronisation across clock domains, and routes data into the DSP processing chain. Particular care was taken to ensure no metastability, no data loss under back-pressure, and clean CDC paths throughout.</p>
+          <div class="upload-zone">
+            <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'adc')">
+            <div class="uz-icon">📎</div>
+            <div class="uz-label">Add document or screenshot</div>
+            <div class="uz-hint">PDF, PNG, JPG, DOCX</div>
+          </div>
+          <div class="link-zone">
+            <input type="text" id="link-adc" placeholder="Paste a Google Drive / OneDrive link…">
+            <button class="link-save-btn" onclick="saveLink('adc')">Save Link</button>
+          </div>
+          <div class="saved-link" id="saved-adc"></div>
+          <div class="uploaded-preview" id="prev-adc">
+            <img id="img-adc" alt="Document preview">
+            <button class="remove-btn" onclick="removeUpload('adc')">×</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERFACES -->
+    <section id="interfaces" class="section">
+      <div class="sec-head reveal">
+        <span class="sec-label">03.</span>
+        <h2 class="sec-title">Interface Design</h2>
+        <div class="sec-rule"></div>
+      </div>
+
+      <!-- I2C -->
+      <div class="doc-card reveal">
+        <div class="doc-card-header" onclick="toggleCard(this)">
+          <div class="dc-left">
+            <div class="dc-icon">🔌</div>
+            <div>
+              <div class="dc-title">I²C Interface — RTL to SoC Integration</div>
+              <div class="dc-desc">Full implementation of the I²C slave interface from protocol logic through top-level integration.</div>
+              <div class="dc-tags">
+                <span class="dc-tag">SystemVerilog</span>
+                <span class="dc-tag">I²C Protocol</span>
+                <span class="dc-tag">SoC Integration</span>
+              </div>
+            </div>
+          </div>
+          <div class="dc-chevron">▾</div>
+        </div>
+        <div class="dc-body">
+          <p class="dc-prose">Designed the complete I²C slave controller — including start/stop detection, byte reception, ACK/NACK logic, register file interface, and clock stretching support. The module was integrated at the SoC level, connected to the internal register bus, and verified for electrical and protocol compliance.</p>
+          <div class="upload-zone">
+            <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'i2c')">
+            <div class="uz-icon">📎</div>
+            <div class="uz-label">Add document or screenshot</div>
+            <div class="uz-hint">PDF, PNG, JPG, DOCX</div>
+          </div>
+          <div class="link-zone">
+            <input type="text" id="link-i2c" placeholder="Paste a Google Drive / OneDrive link…">
+            <button class="link-save-btn" onclick="saveLink('i2c')">Save Link</button>
+          </div>
+          <div class="saved-link" id="saved-i2c"></div>
+          <div class="uploaded-preview" id="prev-i2c">
+            <img id="img-i2c" alt="Document preview">
+            <button class="remove-btn" onclick="removeUpload('i2c')">×</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SENT -->
+      <div class="doc-card reveal">
+        <div class="doc-card-header" onclick="toggleCard(this)">
+          <div class="dc-left">
+            <div class="dc-icon">📶</div>
+            <div>
+              <div class="dc-title">SENT Interface — Single Edge Nibble Transmission</div>
+              <div class="dc-desc">RTL implementation of the SENT automotive sensor interface protocol.</div>
+              <div class="dc-tags">
+                <span class="dc-tag">SystemVerilog</span>
+                <span class="dc-tag">SENT Protocol</span>
+                <span class="dc-tag">Automotive Interface</span>
+              </div>
+            </div>
+          </div>
+          <div class="dc-chevron">▾</div>
+        </div>
+        <div class="dc-body">
+          <p class="dc-prose">Implemented the SENT (Single Edge Nibble Transmission) transmitter per SAE J2716 — including calibration pulse generation, nibble encoding, pause pulses, and CRC computation. This is an automotive-grade unidirectional interface used to transmit sensor data to ECUs. The implementation was designed to meet the timing tolerances required by the automotive specification.</p>
+          <div class="upload-zone">
+            <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'sent')">
+            <div class="uz-icon">📎</div>
+            <div class="uz-label">Add document or screenshot</div>
+            <div class="uz-hint">PDF, PNG, JPG, DOCX</div>
+          </div>
+          <div class="link-zone">
+            <input type="text" id="link-sent" placeholder="Paste a Google Drive / OneDrive link…">
+            <button class="link-save-btn" onclick="saveLink('sent')">Save Link</button>
+          </div>
+          <div class="saved-link" id="saved-sent"></div>
+          <div class="uploaded-preview" id="prev-sent">
+            <img id="img-sent" alt="Document preview">
+            <button class="remove-btn" onclick="removeUpload('sent')">×</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUNCTIONAL SAFETY -->
+    <section id="safety" class="section">
+      <div class="sec-head reveal">
+        <span class="sec-label">04.</span>
+        <h2 class="sec-title">Functional Safety (FuSa)</h2>
+        <div class="sec-rule"></div>
+      </div>
+
+      <div class="doc-card reveal">
+        <div class="doc-card-header" onclick="toggleCard(this)">
+          <div class="dc-left">
+            <div class="dc-icon">🛡️</div>
+            <div>
+              <div class="dc-title">Safety-Aware RTL Architecture</div>
+              <div class="dc-desc">RTL structures designed to meet ISO 26262 Functional Safety requirements.</div>
+              <div class="dc-tags">
+                <span class="dc-tag">Functional Safety</span>
+                <span class="dc-tag">ISO 26262</span>
+                <span class="dc-tag">Redundancy Logic</span>
+                <span class="dc-tag">FuSa</span>
+              </div>
+            </div>
+          </div>
+          <div class="dc-chevron">▾</div>
+        </div>
+        <div class="dc-body">
+          <p class="dc-prose">Designed RTL modules that meet Functional Safety (FuSa) requirements aligned with ISO 26262 — the international standard for automotive electrical and electronic system safety. This involved architecting registers, control logic, and redundancy structures so that hardware faults could be detected, reported, or tolerated within the defined ASIL (Automotive Safety Integrity Level) targets.</p>
+          <p class="dc-prose" style="margin-top:12px;">Work included safety mechanism selection (e.g., parity bits, error flags, reset monitoring), register access protection, and ensuring that safety-relevant signals had correct propagation paths with no inadvertent masking.</p>
+          <div class="upload-zone">
+            <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'fusa')">
+            <div class="uz-icon">📎</div>
+            <div class="uz-label">Add document or screenshot</div>
+            <div class="uz-hint">PDF, PNG, JPG, DOCX</div>
+          </div>
+          <div class="link-zone">
+            <input type="text" id="link-fusa" placeholder="Paste a Google Drive / OneDrive link…">
+            <button class="link-save-btn" onclick="saveLink('fusa')">Save Link</button>
+          </div>
+          <div class="saved-link" id="saved-fusa"></div>
+          <div class="uploaded-preview" id="prev-fusa">
+            <img id="img-fusa" alt="Document preview">
+            <button class="remove-btn" onclick="removeUpload('fusa')">×</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VERIFICATION -->
+    <section id="verification" class="section">
+      <div class="sec-head reveal">
+        <span class="sec-label">05.</span>
+        <h2 class="sec-title">Verification & Debug</h2>
+        <div class="sec-rule"></div>
+      </div>
+
+      <div class="doc-card reveal">
+        <div class="doc-card-header" onclick="toggleCard(this)">
+          <div class="dc-left">
+            <div class="dc-icon">🧪</div>
+            <div>
+              <div class="dc-title">Simulation Debugging — SimVision</div>
+              <div class="dc-desc">Waveform debug methodology and simulation sign-off at ams-OSRAM.</div>
+              <div class="dc-tags">
+                <span class="dc-tag">SimVision</span>
+                <span class="dc-tag">SystemVerilog</span>
+                <span class="dc-tag">Waveform Debug</span>
+              </div>
+            </div>
+          </div>
+          <div class="dc-chevron">▾</div>
+        </div>
+        <div class="dc-body">
+          <p class="dc-prose">Used Synopsys SimVision as the primary waveform analysis tool for simulation debug. Investigated functional failures by tracing signal propagation through module hierarchies, identifying root causes in RTL logic, timing violations, and testbench mismatches. Produced clear debug reports shared with the design and verification team.</p>
+          <div class="upload-zone">
+            <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'sim')">
+            <div class="uz-icon">📎</div>
+            <div class="uz-label">Add document or screenshot</div>
+            <div class="uz-hint">PDF, PNG, JPG, DOCX</div>
+          </div>
+          <div class="link-zone">
+            <input type="text" id="link-sim" placeholder="Paste a Google Drive / OneDrive link…">
+            <button class="link-save-btn" onclick="saveLink('sim')">Save Link</button>
+          </div>
+          <div class="saved-link" id="saved-sim"></div>
+          <div class="uploaded-preview" id="prev-sim">
+            <img id="img-sim" alt="Document preview">
+            <button class="remove-btn" onclick="removeUpload('sim')">×</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIGN-OFF -->
+    <section id="signoff" class="section">
+      <div class="sec-head reveal">
+        <span class="sec-label">06.</span>
+        <h2 class="sec-title">Sign-off Flows</h2>
+        <div class="sec-rule"></div>
+      </div>
+
+      <!-- Lint & CDC -->
+      <div class="doc-card reveal">
+        <div class="doc-card-header" onclick="toggleCard(this)">
+          <div class="dc-left">
+            <div class="dc-icon">✅</div>
+            <div>
+              <div class="dc-title">Lint & CDC Sign-off</div>
+              <div class="dc-desc">Module-level and top-level Lint and Clock Domain Crossing analysis.</div>
+              <div class="dc-tags">
+                <span class="dc-tag">Lint</span>
+                <span class="dc-tag">CDC</span>
+                <span class="dc-tag">Sign-off</span>
+              </div>
+            </div>
+          </div>
+          <div class="dc-chevron">▾</div>
+        </div>
+        <div class="dc-body">
+          <p class="dc-prose">Ran Lint analysis at module level to catch coding guideline violations, unresolved signals, undriven outputs, and synthesis-unfriendly constructs before handoff. Executed CDC checks to identify and resolve all asynchronous domain crossings — ensuring proper synchroniser insertion, no false paths, and no functional CDC violations at both block and top-level integration.</p>
+          <div class="upload-zone">
+            <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'lint')">
+            <div class="uz-icon">📎</div>
+            <div class="uz-label">Add Lint / CDC report</div>
+            <div class="uz-hint">PDF, PNG, JPG, DOCX</div>
+          </div>
+          <div class="link-zone">
+            <input type="text" id="link-lint" placeholder="Paste a Google Drive / OneDrive link…">
+            <button class="link-save-btn" onclick="saveLink('lint')">Save Link</button>
+          </div>
+          <div class="saved-link" id="saved-lint"></div>
+          <div class="uploaded-preview" id="prev-lint">
+            <img id="img-lint" alt="Document preview">
+            <button class="remove-btn" onclick="removeUpload('lint')">×</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Onespin Formal -->
+      <div class="doc-card reveal">
+        <div class="doc-card-header" onclick="toggleCard(this)">
+          <div class="dc-left">
+            <div class="dc-icon">🔬</div>
+            <div>
+              <div class="dc-title">Formal Verification — OneSpin</div>
+              <div class="dc-desc">Property checking and formal analysis using OneSpin at module level.</div>
+              <div class="dc-tags">
+                <span class="dc-tag">OneSpin</span>
+                <span class="dc-tag">Formal Verification</span>
+                <span class="dc-tag">Property Checking</span>
+              </div>
+            </div>
+          </div>
+          <div class="dc-chevron">▾</div>
+        </div>
+        <div class="dc-body">
+          <p class="dc-prose">Used OneSpin to run formal property checks on critical RTL modules — verifying safety properties, interface protocol compliance, and control logic correctness that simulation alone cannot exhaustively cover. Formal verification provides mathematical guarantees over all possible inputs and states, not just those exercised by a testbench.</p>
+          <div class="upload-zone">
+            <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'formal')">
+            <div class="uz-icon">📎</div>
+            <div class="uz-label">Add formal check report</div>
+            <div class="uz-hint">PDF, PNG, JPG, DOCX</div>
+          </div>
+          <div class="link-zone">
+            <input type="text" id="link-formal" placeholder="Paste a Google Drive / OneDrive link…">
+            <button class="link-save-btn" onclick="saveLink('formal')">Save Link</button>
+          </div>
+          <div class="saved-link" id="saved-formal"></div>
+          <div class="uploaded-preview" id="prev-formal">
+            <img id="img-formal" alt="Document preview">
+            <button class="remove-btn" onclick="removeUpload('formal')">×</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DFT -->
+      <div class="doc-card reveal">
+        <div class="doc-card-header" onclick="toggleCard(this)">
+          <div class="dc-left">
+            <div class="dc-icon">🛠️</div>
+            <div>
+              <div class="dc-title">DFT — Test Modes & ATPG Muxing</div>
+              <div class="dc-desc">Design-for-Test logic including test mode control, ATPG muxing, and scan insertion.</div>
+              <div class="dc-tags">
+                <span class="dc-tag">DFT</span>
+                <span class="dc-tag">ATPG</span>
+                <span class="dc-tag">Scan Logic</span>
+                <span class="dc-tag">Test Modes</span>
+              </div>
+            </div>
+          </div>
+          <div class="dc-chevron">▾</div>
+        </div>
+        <div class="dc-body">
+          <p class="dc-prose">Independently owned DFT responsibilities for the modules I designed — including test mode multiplexing logic, ATPG-compatible scan insertion, and register bypass for production test. Ensured all flip-flops were scan-clean, test mode signals were properly isolated from functional paths, and the design met ATPG fault coverage targets.</p>
+          <div class="upload-zone">
+            <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'dft')">
+            <div class="uz-icon">📎</div>
+            <div class="uz-label">Add DFT documentation</div>
+            <div class="uz-hint">PDF, PNG, JPG, DOCX</div>
+          </div>
+          <div class="link-zone">
+            <input type="text" id="link-dft" placeholder="Paste a Google Drive / OneDrive link…">
+            <button class="link-save-btn" onclick="saveLink('dft')">Save Link</button>
+          </div>
+          <div class="saved-link" id="saved-dft"></div>
+          <div class="uploaded-preview" id="prev-dft">
+            <img id="img-dft" alt="Document preview">
+            <button class="remove-btn" onclick="removeUpload('dft')">×</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  Harshita &nbsp;·&nbsp; Work Documentation — ams-OSRAM Semiconductor &nbsp;·&nbsp;
+  <a href="harshita-portfolio-v4.html" style="color:#7ca3e0;">← Back to Portfolio</a>
+</footer>
+
+<script>
+/* ---- scroll progress ---- */
+const prog = document.getElementById('prog');
+window.addEventListener('scroll', () => {
+  const p = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  prog.style.transform = `scaleX(${p})`;
+}, { passive: true });
+
+/* ---- reveal ---- */
+const reveals = document.querySelectorAll('.reveal');
+const rObs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 60);
+      rObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.06 });
+reveals.forEach(el => rObs.observe(el));
+
+/* ---- active nav ---- */
+const secs = document.querySelectorAll('section[id]');
+const navBtns = document.querySelectorAll('.nav-btn');
+const nObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navBtns.forEach(b => b.classList.remove('active'));
+      document.querySelector(`.nav-btn[data-s="${e.target.id}"]`)?.classList.add('active');
+    }
+  });
+}, { threshold: 0.25, rootMargin: '-40px 0px -40px 0px' });
+secs.forEach(s => nObs.observe(s));
+
+navBtns.forEach(b => b.addEventListener('click', () => {
+  document.getElementById(b.dataset.s)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}));
+
+/* ---- accordion toggle ---- */
+function toggleCard(header) {
+  const card = header.closest('.doc-card');
+  card.classList.toggle('open');
+}
+
+/* ---- upload handler ---- */
+function handleUpload(input, id) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.type.startsWith('image/')) {
+    const url = URL.createObjectURL(file);
+    document.getElementById(`img-${id}`).src = url;
+    document.getElementById(`prev-${id}`).style.display = 'block';
+    // hide upload zone
+    input.closest('.upload-zone').style.opacity = '0.4';
+    input.closest('.upload-zone').style.pointerEvents = 'none';
+  } else {
+    // non-image file: show file name
+    const zone = input.closest('.upload-zone');
+    zone.querySelector('.uz-icon').textContent = '📄';
+    zone.querySelector('.uz-label').textContent = file.name;
+    zone.querySelector('.uz-hint').textContent = 'File attached — share the page link with recruiters';
+    zone.style.borderColor = 'var(--accent)';
+    zone.style.background = 'var(--accent-soft)';
+  }
+}
+
+/* ---- remove upload ---- */
+function removeUpload(id) {
+  document.getElementById(`img-${id}`).src = '';
+  document.getElementById(`prev-${id}`).style.display = 'none';
+  const card = document.getElementById(`prev-${id}`).closest('.dc-body');
+  const zone = card.querySelector('.upload-zone');
+  zone.style.opacity = '1';
+  zone.style.pointerEvents = 'auto';
+}
+
+/* ---- save link ---- */
+function saveLink(id) {
+  const val = document.getElementById(`link-${id}`).value.trim();
+  const box = document.getElementById(`saved-${id}`);
+  if (!val) { box.style.display = 'none'; return; }
+  box.innerHTML = `✅ Link saved: <a href="${val}" target="_blank">${val.length > 60 ? val.slice(0,60)+'…' : val}</a>`;
+  box.style.display = 'block';
+}
+</script>
+</body>
+</html>
