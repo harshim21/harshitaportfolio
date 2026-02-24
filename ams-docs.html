@@ -480,7 +480,7 @@ footer em { color: #7ca3e0; font-style: normal; }
       </div>
 
       <div class="info-box reveal">
-        <strong>Note for recruiters:</strong> This page documents the nature, scope, and technical depth of work done at ams-OSRAM. Specific documents can be shared on request — links or files can be attached to each section below.
+        <strong>Note:</strong> This page documents the nature, scope, and technical depth of the work I completed at ams‑OSRAM, and includes links to learning materials and supporting documents for each section.
       </div>
 
       <!-- Overview card -->
@@ -503,32 +503,16 @@ footer em { color: #7ca3e0; font-style: normal; }
         </div>
         <div class="dc-body">
           <p class="dc-prose">I worked on a production Temperature Sensor chip at ams-OSRAM integrating both NTC (Negative Temperature Coefficient) and ITS (Integrated Temperature Sensor) sensing elements. The chip is a mixed-signal SoC — combining analog front-end circuitry with a digital back-end responsible for data processing, interface communication, and functional safety logic.</p>
-          <p class="dc-prose" style="margin-top:12px;">My role covered the entire digital RTL domain: from block-level design and DFT insertion to CDC sign-off and formal verification. I worked directly with the physical design and analog teams to ensure timing, scan, and interface constraints were met.</p>
-
-          <div class="upload-zone" id="uz-overview">
-            <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'overview')">
-            <div class="uz-icon">📎</div>
-            <div class="uz-label">Add document or screenshot</div>
-            <div class="uz-hint">PDF, PNG, JPG, DOCX — click or drag</div>
-          </div>
-          <div class="link-zone">
-            <input type="text" id="link-overview" placeholder="Or paste a Google Drive / OneDrive link…">
-            <button class="link-save-btn" onclick="saveLink('overview')">Save Link</button>
-          </div>
-          <div class="saved-link" id="saved-overview"></div>
-          <div class="uploaded-preview" id="prev-overview">
-            <img id="img-overview" alt="Document preview">
-            <button class="remove-btn" onclick="removeUpload('overview')">×</button>
-          </div>
-        </div>
-      </div>
+          <p class="dc-prose" style="margin-top:12px;">My role covered the digital RTL domain. I contributed to a temperature‑sensor SoC, developing DSP, ADC‑data, and computation logic, along with I²C and SENT protocol blocks with CRC handling. I also implemented FuSa‑oriented error‑detection features, owned test‑mode and register logic, ran Lint/CDC/Formal checks, and debugged simulations using SimVision. I worked directly with the analog teams to ensure timing was met.</p>
+          I contributed to a temperature‑sensor SoC, developing DSP, ADC‑data, and computation logic, along with I²C and SENT protocol blocks with CRC handling. I also implemented FuSa‑oriented error‑detection features, owned test‑mode and register logic, ran Lint/CDC/Formal checks, and debugged simulations using SimVision.
+       </div>
     </section>
 
     <!-- RTL DESIGN -->
     <section id="rtl" class="section">
       <div class="sec-head reveal">
         <span class="sec-label">02.</span>
-        <h2 class="sec-title">RTL Design Work</h2>
+        <h2 class="sec-title">RTL Design Learnings</h2>
         <div class="sec-rule"></div>
       </div>
 
@@ -538,20 +522,37 @@ footer em { color: #7ca3e0; font-style: normal; }
           <div class="dc-left">
             <div class="dc-icon">🔣</div>
             <div>
-              <div class="dc-title">DSP Logic & Numerical Computation Blocks</div>
+              <div class="dc-title">DSP Logic & Numerical Computation Blocks - Learnings</div>
               <div class="dc-desc">RTL design of digital signal processing and arithmetic computation modules.</div>
               <div class="dc-tags">
+                 <span class="dc-tag">ITS sensors</span>
+                 <span class="dc-tag">NTC senssor</span>
                 <span class="dc-tag">SystemVerilog</span>
                 <span class="dc-tag">DSP</span>
-                <span class="dc-tag">Fixed-Point Arithmetic</span>
-              </div>
+            </div>
             </div>
           </div>
           <div class="dc-chevron">▾</div>
         </div>
         <div class="dc-body">
-          <p class="dc-prose">Designed RTL blocks responsible for processing the raw digital output from the ADC — including filter logic, gain correction, offset calibration arithmetic, and temperature linearisation computation. These blocks operate on fixed-point data and must produce accurate results within defined latency budgets.</p>
-          <div class="conf-note">⚠️ Specific design files and microarchitecture details are subject to NDA. Please request access directly.</div>
+          <p class="dc-prose">Learning RTL blocks processing the raw digital output from the ADC — including filter logic, gain correction, offset calibration arithmetic, and temperature linearisation computation. These blocks operate on fixed-point data and must produce accurate results within defined latency budgets.</p>
+          <div class="dc-title">NTC Learning related document- Learnings</div>
+          <div class="upload-zone">
+            <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'dsp')">
+            <div class="uz-icon">📎</div>
+            <div class="uz-label">Add document or screenshot</div>
+            <div class="uz-hint">PDF, PNG, JPG, DOCX</div>
+          </div>
+          <div class="link-zone">
+            <input type="text" id="link-dsp" placeholder="Paste a Google Drive / OneDrive link…">
+            <button class="link-save-btn" onclick="saveLink('dsp')">Save Link</button>
+          </div>
+          <div class="saved-link" id="saved-dsp"></div>
+          <div class="uploaded-preview" id="prev-dsp">
+            <img id="img-dsp" alt="Document preview">
+            <button class="remove-btn" onclick="removeUpload('dsp')">×</button>
+          </div>
+          <div class="dc-title">ITS Learning related document- Learnings</div>
           <div class="upload-zone">
             <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'dsp')">
             <div class="uz-icon">📎</div>
@@ -569,43 +570,7 @@ footer em { color: #7ca3e0; font-style: normal; }
           </div>
         </div>
       </div>
-
-      <!-- ADC Data Path -->
-      <div class="doc-card reveal">
-        <div class="doc-card-header" onclick="toggleCard(this)">
-          <div class="dc-left">
-            <div class="dc-icon">📡</div>
-            <div>
-              <div class="dc-title">ADC Data Handling Pipeline</div>
-              <div class="dc-desc">Digital interface and data path logic between the analog ADC and the digital processing core.</div>
-              <div class="dc-tags">
-                <span class="dc-tag">SystemVerilog</span>
-                <span class="dc-tag">ADC Interface</span>
-                <span class="dc-tag">Data Path</span>
-              </div>
-            </div>
-          </div>
-          <div class="dc-chevron">▾</div>
-        </div>
-        <div class="dc-body">
-          <p class="dc-prose">Developed the digital pipeline that receives raw conversion data from the mixed-signal ADC, manages handshaking and data validity, applies synchronisation across clock domains, and routes data into the DSP processing chain. Particular care was taken to ensure no metastability, no data loss under back-pressure, and clean CDC paths throughout.</p>
-          <div class="upload-zone">
-            <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'adc')">
-            <div class="uz-icon">📎</div>
-            <div class="uz-label">Add document or screenshot</div>
-            <div class="uz-hint">PDF, PNG, JPG, DOCX</div>
-          </div>
-          <div class="link-zone">
-            <input type="text" id="link-adc" placeholder="Paste a Google Drive / OneDrive link…">
-            <button class="link-save-btn" onclick="saveLink('adc')">Save Link</button>
-          </div>
-          <div class="saved-link" id="saved-adc"></div>
-          <div class="uploaded-preview" id="prev-adc">
-            <img id="img-adc" alt="Document preview">
-            <button class="remove-btn" onclick="removeUpload('adc')">×</button>
-          </div>
-        </div>
-      </div>
+      
     </section>
 
     <!-- INTERFACES -->
@@ -738,11 +703,11 @@ footer em { color: #7ca3e0; font-style: normal; }
       </div>
     </section>
 
-    <!-- VERIFICATION -->
+    <!-- TOOL RELATED LEARNINGS -->
     <section id="verification" class="section">
       <div class="sec-head reveal">
         <span class="sec-label">05.</span>
-        <h2 class="sec-title">Verification & Debug</h2>
+        <h2 class="sec-title">TOOL RELATED LEARNINGS</h2>
         <div class="sec-rule"></div>
       </div>
 
@@ -778,127 +743,6 @@ footer em { color: #7ca3e0; font-style: normal; }
           <div class="uploaded-preview" id="prev-sim">
             <img id="img-sim" alt="Document preview">
             <button class="remove-btn" onclick="removeUpload('sim')">×</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SIGN-OFF -->
-    <section id="signoff" class="section">
-      <div class="sec-head reveal">
-        <span class="sec-label">06.</span>
-        <h2 class="sec-title">Sign-off Flows</h2>
-        <div class="sec-rule"></div>
-      </div>
-
-      <!-- Lint & CDC -->
-      <div class="doc-card reveal">
-        <div class="doc-card-header" onclick="toggleCard(this)">
-          <div class="dc-left">
-            <div class="dc-icon">✅</div>
-            <div>
-              <div class="dc-title">Lint & CDC Sign-off</div>
-              <div class="dc-desc">Module-level and top-level Lint and Clock Domain Crossing analysis.</div>
-              <div class="dc-tags">
-                <span class="dc-tag">Lint</span>
-                <span class="dc-tag">CDC</span>
-                <span class="dc-tag">Sign-off</span>
-              </div>
-            </div>
-          </div>
-          <div class="dc-chevron">▾</div>
-        </div>
-        <div class="dc-body">
-          <p class="dc-prose">Ran Lint analysis at module level to catch coding guideline violations, unresolved signals, undriven outputs, and synthesis-unfriendly constructs before handoff. Executed CDC checks to identify and resolve all asynchronous domain crossings — ensuring proper synchroniser insertion, no false paths, and no functional CDC violations at both block and top-level integration.</p>
-          <div class="upload-zone">
-            <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'lint')">
-            <div class="uz-icon">📎</div>
-            <div class="uz-label">Add Lint / CDC report</div>
-            <div class="uz-hint">PDF, PNG, JPG, DOCX</div>
-          </div>
-          <div class="link-zone">
-            <input type="text" id="link-lint" placeholder="Paste a Google Drive / OneDrive link…">
-            <button class="link-save-btn" onclick="saveLink('lint')">Save Link</button>
-          </div>
-          <div class="saved-link" id="saved-lint"></div>
-          <div class="uploaded-preview" id="prev-lint">
-            <img id="img-lint" alt="Document preview">
-            <button class="remove-btn" onclick="removeUpload('lint')">×</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Onespin Formal -->
-      <div class="doc-card reveal">
-        <div class="doc-card-header" onclick="toggleCard(this)">
-          <div class="dc-left">
-            <div class="dc-icon">🔬</div>
-            <div>
-              <div class="dc-title">Formal Verification — OneSpin</div>
-              <div class="dc-desc">Property checking and formal analysis using OneSpin at module level.</div>
-              <div class="dc-tags">
-                <span class="dc-tag">OneSpin</span>
-                <span class="dc-tag">Formal Verification</span>
-                <span class="dc-tag">Property Checking</span>
-              </div>
-            </div>
-          </div>
-          <div class="dc-chevron">▾</div>
-        </div>
-        <div class="dc-body">
-          <p class="dc-prose">Used OneSpin to run formal property checks on critical RTL modules — verifying safety properties, interface protocol compliance, and control logic correctness that simulation alone cannot exhaustively cover. Formal verification provides mathematical guarantees over all possible inputs and states, not just those exercised by a testbench.</p>
-          <div class="upload-zone">
-            <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'formal')">
-            <div class="uz-icon">📎</div>
-            <div class="uz-label">Add formal check report</div>
-            <div class="uz-hint">PDF, PNG, JPG, DOCX</div>
-          </div>
-          <div class="link-zone">
-            <input type="text" id="link-formal" placeholder="Paste a Google Drive / OneDrive link…">
-            <button class="link-save-btn" onclick="saveLink('formal')">Save Link</button>
-          </div>
-          <div class="saved-link" id="saved-formal"></div>
-          <div class="uploaded-preview" id="prev-formal">
-            <img id="img-formal" alt="Document preview">
-            <button class="remove-btn" onclick="removeUpload('formal')">×</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- DFT -->
-      <div class="doc-card reveal">
-        <div class="doc-card-header" onclick="toggleCard(this)">
-          <div class="dc-left">
-            <div class="dc-icon">🛠️</div>
-            <div>
-              <div class="dc-title">DFT — Test Modes & ATPG Muxing</div>
-              <div class="dc-desc">Design-for-Test logic including test mode control, ATPG muxing, and scan insertion.</div>
-              <div class="dc-tags">
-                <span class="dc-tag">DFT</span>
-                <span class="dc-tag">ATPG</span>
-                <span class="dc-tag">Scan Logic</span>
-                <span class="dc-tag">Test Modes</span>
-              </div>
-            </div>
-          </div>
-          <div class="dc-chevron">▾</div>
-        </div>
-        <div class="dc-body">
-          <p class="dc-prose">Independently owned DFT responsibilities for the modules I designed — including test mode multiplexing logic, ATPG-compatible scan insertion, and register bypass for production test. Ensured all flip-flops were scan-clean, test mode signals were properly isolated from functional paths, and the design met ATPG fault coverage targets.</p>
-          <div class="upload-zone">
-            <input type="file" accept=".pdf,.png,.jpg,.jpeg,.docx" onchange="handleUpload(this,'dft')">
-            <div class="uz-icon">📎</div>
-            <div class="uz-label">Add DFT documentation</div>
-            <div class="uz-hint">PDF, PNG, JPG, DOCX</div>
-          </div>
-          <div class="link-zone">
-            <input type="text" id="link-dft" placeholder="Paste a Google Drive / OneDrive link…">
-            <button class="link-save-btn" onclick="saveLink('dft')">Save Link</button>
-          </div>
-          <div class="saved-link" id="saved-dft"></div>
-          <div class="uploaded-preview" id="prev-dft">
-            <img id="img-dft" alt="Document preview">
-            <button class="remove-btn" onclick="removeUpload('dft')">×</button>
           </div>
         </div>
       </div>
