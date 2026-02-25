@@ -515,55 +515,83 @@ nav { display: flex; flex-direction: column; gap: 2px; }
 }
 
 /* ===== CERTS ===== */
+/* Grid */
 .cert-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
 }
 
+/* Card */
 .cert-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 22px 20px;
-  cursor: pointer;
-  transition: all var(--t) var(--ease);
-  box-shadow: var(--shadow);
-  display: flex; flex-direction: column; gap: 10px;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  align-items: center;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+  border: 1px solid rgba(0,0,0,0.06);
 }
+
 .cert-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+  border-color: rgba(0,0,0,0.12);
 }
 
+/* Badge */
 .cert-badge {
-  width: 38px; height: 38px;
-  background: var(--accent-soft);
-  border-radius: var(--radius);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.8rem;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  background: #f3f6ff;
+  color: #3557ff;
+  border-radius: 12px;
+  font-size: 22px;
 }
 
+/* Text block */
+.cert-text {
+  display: grid;
+  gap: 6px;
+}
+
+/* Name / Issuer / Link */
 .cert-name {
-  font-size: 1.35rem;
-  font-weight: 600;
-  color: var(--text-dark);
-  line-height: 1.4;
+  font-weight: 700;
+  color: #1b1f24;
 }
 
 .cert-issuer {
-  font-family: var(--mono);
-  font-size: 1.1rem;
-  color: var(--text-muted);
+  font-size: 0.92rem;
+  color: #6b7280;
 }
 
 .cert-view {
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--accent);
-  font-family: var(--mono);
-  margin-top: auto;
+  width: fit-content;
+  font-weight: 700;
+  text-decoration: none;
+  color: #2b6cb0;            /* link color */
+  border-bottom: 2px solid rgba(43,108,176,0.25);
+  transition: color 140ms ease, border-color 140ms ease, transform 140ms ease;
+}
+
+.cert-view:hover {
+  color: #1a4e82;
+  border-color: #1a4e82;
+  transform: translateX(2px);
+}
+
+/* Optional: subtle reveal animation if you use .reveal */
+.reveal {
+  animation: fadeUp 420ms ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ===== AWARD ===== */
@@ -1040,34 +1068,43 @@ footer em { color: #7ca3e0; font-style: normal; }
       </div>
 
       <!-- CERTS -->
-      <div style="margin-top:52px;">
-        <div class="sec-head reveal" style="margin-bottom:24px;">
-          <span class="sec-label">05b.</span>
-          <h2 class="sec-title" style="font-size:1.8rem;">Certifications</h2>
-          <div class="sec-rule"></div>
-        </div>
-        <div class="cert-grid">
-          <a href="RISC-V_Processor_-_RV32I_Base_ISA_-HARSHITA_compressed_11zon.pdf" target="_t-badge">🖥️</div>
-            <div class="cert-badge">🖥️</div>
-            <div class="cert-name">RISC-V Processor — RV32I Base ISA</div>
-            <div class="cert-issuer">Maven Silicon</div>
-            <div class="cert-view">View Certificate →</div>
-          </div>
-          <div class="cert-card reveal" 
-            <div class="cert-badge">🧪</div> <a href="UVM Certification.png" target="_t-badge">🖥️</div>
-            <div class="cert-name">UVM Verification Fundamentals</div>
-            <div class="cert-issuer">Udemy</div>
-            <div class="cert-view">View Certificate →</div>
-          </div>
-          <div class="cert-card reveal"  <a href="VERILOG_CERIIFICATE.jpg" target="_t-badge">🖥️</div> 
-            <div class="cert-badge">📐</div>
-            <div class="cert-name">Verification &amp; SystemVerilog Fundamentals</div>
-            <div class="cert-issuer">Online Course</div>
-            <div class="cert-view">View Certificate →</div>
-          </div>
-        </div>
-      </div>
+      <!-- CERTIFICATIONS -->
+<div style="margin-top:52px;">
+  <div class="sec-head reveal" style="margin-bottom:24px;">
+    <span class="sec-label">05b.</span>
+    <h2 class="sec-title" style="font-size:1.8rem;">Certifications</h2>
+    <div class="sec-rule"></div>
+  </div>
 
+  <div class="cert-grid">
+
+    <!-- Card 1 -->
+    <div class="cert-card reveal">
+      <div class="cert-badge">🖥️</div>
+      <div class="cert-text">
+        <div class="cert-name">RISC-V Processor — RV32I Base ISA</div>
+        <div class="cert-issuer">Maven Silicon</div>
+        <a
+          href="RISC-V_Processor_-_RV32I_Base_ISA_-HARSHITA_compressed_11zon.pdf"
+          target="_blank"
+          rel="noopener"
+          class="cert-view"
+          aria-label="Open RISC-V Processor — RV32I Base ISA certificate (PDF) in new tabs="cert-name">UVM Verification Fundamentals</div>
+        <div class="cert-issuer">Udemy</div>
+        <a
+          href="UVM Certification.png"
+          target="_blank"
+          rel="noopener"
+          class="cert-view"
+          aria-label="Open UVM Verification     <div class="cert-text">
+        <div class="cert-name">Verification &amp; SystemVerilog Fundamentals</div>
+        <div class="cert-issuer">Online Course</div>
+        <a
+          href="VERILOG_CERIIFICATE.jpg"
+          target="_blank"
+          rel="noopener"
+          class="cert-view"
+          aria-label="Open Verification and
       <!-- AWARD -->
       <div style="margin-top:36px;" class="reveal">
         <div class="award-card">
