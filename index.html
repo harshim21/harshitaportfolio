@@ -1189,19 +1189,27 @@ document.getElementById('mClose').onclick = closeM;
 ov.addEventListener('click', e => { if (e.target === ov) closeM(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeM(); });
 
-function openM(title, sub, bodyHTML) {
+
+function openM(title, sub, bodyHTML, link) {
   mTitle.textContent = title;
   mSub.textContent = sub;
+
   mBody.innerHTML = `
-    <div class="modal-upload-zone">
-  <a href="${arguments[3]}" target="_blank" class="cert-link-btn">
-    📄 View Certificate
-  </a>
-</div>
-    ${bodyHTML}`;
+    <a href="${link}" target="_blank" class="modal-upload-zone cert-full-link">
+      <div class="u-icon">📄</div>
+      <p style="font-size:1.25rem">
+        Click anywhere in this box to view certificate<br>
+        <span style="font-size:1.1rem;color:var(--text-muted)">
+          Opens in new tab
+        </span>
+      </p>
+    </a>
+    ${bodyHTML}
+  `;
+
   ov.classList.add('open');
   document.body.style.overflow = 'hidden';
-
+}
   const zone = mBody.querySelector('.modal-upload-zone');
   const inp = zone.querySelector('input');
   const prev = zone.querySelector('.modal-img-prev');
