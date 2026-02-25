@@ -1158,20 +1158,24 @@ const PROJ = {
   }
 };
 
+/* ---- certificate data ---- */
 const CERT = {
   riscvcert: {
     title: 'RISC-V Processor — RV32I Base ISA',
     sub: 'Maven Silicon',
+    link: 'RISC-V_Processor_-_RV32I_Base_ISA_-HARSHITA_compressed_11zon.pdf',
     body: `<p>Covered RISC-V instruction set architecture fundamentals, single-cycle and pipelined processor implementation, hazard detection and forwarding, and practical applications in modern SoC design flows.</p>`
   },
   uvm: {
     title: 'UVM Verification Fundamentals',
     sub: 'Udemy',
-    body: `<p>Comprehensive coverage of Universal Verification Methodology — building UVM environments from scratch, writing sequences and sequences items, using factory overrides, implementing coverage-driven verification, and debugging complex testbench failures.</p>`
+    link: 'UVM Certification.png',
+    body: `<p>Comprehensive coverage of Universal Verification Methodology — building UVM environments from scratch, writing sequences and sequence items, using factory overrides, implementing coverage-driven verification, and debugging complex testbench failures.</p>`
   },
   sv: {
     title: 'Verification & SystemVerilog Fundamentals',
     sub: 'Online Course',
+    link: 'VERILOG_CERIIFICATE.jpg',
     body: `<p>Layered testbench architecture, SystemVerilog data types and OOP features, procedural control, interface and modport constructs, clocking blocks, and assertion-based verification fundamentals including SVA temporal operators.</p>`
   }
 };
@@ -1190,11 +1194,10 @@ function openM(title, sub, bodyHTML) {
   mSub.textContent = sub;
   mBody.innerHTML = `
     <div class="modal-upload-zone">
-      <input type="file" accept="image/*">
-      <img class="modal-img-prev" alt="preview">
-      <div class="u-icon">📎</div>
-      <p style="font-size:1.25rem">Click to upload a screenshot or photo<br><span style="font-size:1.1rem;color:var(--text-muted)">(optional)</span></p>
-    </div>
+  <a href="${arguments[3]}" target="_blank" class="cert-link-btn">
+    📄 View Certificate
+  </a>
+</div>
     ${bodyHTML}`;
   ov.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1223,7 +1226,7 @@ function openProj(id) {
 
 function openCert(id) {
   const c = CERT[id];
-  openM(c.title, c.sub, c.body);
+  openM(c.title, c.sub, c.body, c.link);
 }
 
 /* ---- scroll progress ---- */
